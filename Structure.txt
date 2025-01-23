@@ -1,0 +1,41 @@
+COLLECTIONS
+
+1.USER
+  name
+  email
+  password
+  platform => google
+  role => enum-student-teacher-admin
+
+2.COURSES
+  title
+  description
+  duration
+
+3.BATCHES
+  title
+  description
+  course => course_id . objectId
+
+4.SECTION
+  title
+  description
+  course   => course_id . objectId
+  batch    => batch_id . objectId
+  teacher  => user_id with role teacher
+  status   => pending , ongoing , merged , finished 
+
+
+1.Trainer 
+  Name 
+  Father Name
+  email
+  image
+  CNIC
+  Phone No
+  Whatsapp (opt)
+  Degree
+  courses  => course_id . objectId
+  batch    => batch_id . objectId
+  Sections => section_id .objectId Admin Can Select Sections For Trainer 
+  Date Of Birth
