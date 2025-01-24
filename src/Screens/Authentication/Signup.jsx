@@ -33,117 +33,147 @@
 //   };
 
 //   return (
-//     <div>
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         height: "100vh",
+//         background: "linear-gradient(135deg, #667eea, #764ba2)",
+//         padding: "20px",
+//       }}
+//     >
 //       <div
 //         style={{
-//           display: "flex",
-//           justifyContent: "center",
-//           alignItems: "center",
-//           height: "100vh",
-//           background: "#f0f2f5",
+//           width: "100%",
+//           maxWidth: "420px",
+//           padding: "30px",
+//           borderRadius: "12px",
+//           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
+//           background: "#ffffff",
 //         }}
 //       >
-//         <div
-//           // style={{
-//           //   width: "100%",
-//           //   maxWidth: "400px",
-//           //   padding: "20px",
-//           //   borderRadius: "8px",
-//           //   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-//           //   background: "#ffffff",
-
-//           // }}
-//           className="bg-white/2 isolate backdrop-blur-md max-w-[400px] w-full p-[20px] rounded-xl aspect-video ring-1 ring-black/5 shadow-2xl"
+//         <h2
+//           style={{
+//             textAlign: "center",
+//             marginBottom: "20px",
+//             fontSize: "26px",
+//             fontWeight: "600",
+//             color: "#333",
+//           }}
 //         >
-//           <h2
-//             style={{
-//               textAlign: "center",
-//               marginBottom: "26px",
-//               fontSize: "24px",
-//               fontWeight: "bold",
-//               color: "#ffff",
-//             }}
-//             className="mt-4"
-//           >
-//             SMIT Portal Signup
-//           </h2>
-//           <Form name="signup" onFinish={onFinish} layout="vertical">
-//             <Form.Item
-//               label={
-//                 <label className="text-white text-md uppercase font-bold">
-//                   Name
-//                 </label>
-//               }
-//               name="name"
-//               rules={[{ required: true, message: "Please input your name!" }]}
-//             >
-//               <Input placeholder="Name" size="large" />
-//             </Form.Item>
-//             <Form.Item
-//               label={
-//                 <label className="text-white text-md uppercase font-bold">
-//                   {" "}
-//                   Email
-//                 </label>
-//               }
-//               name="email"
-//               rules={[{ required: true, message: "Please input your email!" }]}
-//             >
-//               <Input placeholder="Email" size="large" />
-//             </Form.Item>
-//             <Form.Item
-//               label={
-//                 <label className="text-white text-md uppercase font-bold">
-//                   Password
-//                 </label>
-//               }
-//               name="password"
-//               rules={[
-//                 { required: true, message: "Please input your password!" },
-//               ]}
-//             >
-//               <Input.Password placeholder="Password" size="large" />
-//             </Form.Item>
-//             <Form.Item>
-//               <Button
-//                 type="primary"
-//                 className="rounded-xl py-6 text-lg mt-5 border-none shadow-lg bg-gradient-to-br from-green-500 to-blue-500 text-white font-semibold"
-//                 htmlType="submit"
-//                 style={{ width: "100%" }}
-//                 size="large"
-//                 loading={loading}
+//           SMIT Portal Signup
+//         </h2>
+//         <Form name="signup" onFinish={onFinish} layout="vertical">
+//           <Form.Item
+//             label={
+//               <label
+//                 style={{
+//                   fontSize: "14px",
+//                   fontWeight: "bold",
+//                   color: "#555",
+//                 }}
 //               >
-//                 Sign Up
-//               </Button>
-//             </Form.Item>
-//           </Form>
-
-//           {/* Login Link Styled */}
-//           <div
-//             style={{
-//               fontSize: "18px",
-//               textAlign: "center",
-//               color: "#fff",
-//               marginBottom: "16px",
-//             }}          >
-//             Already have an account?{" "}
-//             <Link
-//               to="/login"
+//                 Name
+//               </label>
+//             }
+//             name="name"
+//             rules={[{ required: true, message: "Please input your name!" }]}
+//           >
+//             <Input
+//               placeholder="Enter your name"
+//               size="large"
+//               style={{ borderRadius: "8px" }}
+//             />
+//           </Form.Item>
+//           <Form.Item
+//             label={
+//               <label
+//                 style={{
+//                   fontSize: "14px",
+//                   fontWeight: "bold",
+//                   color: "#555",
+//                 }}
+//               >
+//                 Email
+//               </label>
+//             }
+//             name="email"
+//             rules={[{ required: true, message: "Please input your email!" }]}
+//           >
+//             <Input
+//               placeholder="Enter your email"
+//               size="large"
+//               style={{ borderRadius: "8px" }}
+//             />
+//           </Form.Item>
+//           <Form.Item
+//             label={
+//               <label
+//                 style={{
+//                   fontSize: "14px",
+//                   fontWeight: "bold",
+//                   color: "#555",
+//                 }}
+//               >
+//                 Password
+//               </label>
+//             }
+//             name="password"
+//             rules={[{ required: true, message: "Please input your password!" }]}
+//           >
+//             <Input.Password
+//               placeholder="Enter your password"
+//               size="large"
+//               style={{ borderRadius: "8px" }}
+//             />
+//           </Form.Item>
+//           <Form.Item>
+//             <Button
+//               type="primary"
+//               htmlType="submit"
 //               style={{
-//                 color: "#0561a6",
+//                 width: "100%",
+//                 padding: "10px 0",
+//                 borderRadius: "8px",
+//                 background: "linear-gradient(135deg, #667eea, #764ba2)",
+//                 border: "none",
+//                 fontSize: "16px",
 //                 fontWeight: "bold",
-//                 textDecoration: "none",
 //               }}
+//               size="large"
+//               loading={loading}
 //             >
-//               Login
-//             </Link>
-//           </div>
+//               Sign Up
+//             </Button>
+//           </Form.Item>
+//         </Form>
+
+//         {/* Login Link Styled */}
+//         <div
+//           style={{
+//             fontSize: "14px",
+//             textAlign: "center",
+//             color: "#555",
+//             marginTop: "16px",
+//           }}
+//         >
+//           Already have an account?{" "}
+//           <Link
+//             to="/login"
+//             style={{
+//               color: "#667eea",
+//               fontWeight: "bold",
+//               textDecoration: "none",
+//             }}
+//           >
+//             Login
+//           </Link>
 //         </div>
 //       </div>
 //     </div>
 //   );
 // }
-
 
 
 
@@ -189,94 +219,52 @@ export default function SignUp() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background: "linear-gradient(135deg, #667eea, #764ba2)",
+        background: "#f4f4f4",
         padding: "20px",
       }}
     >
       <div
         style={{
           width: "100%",
-          maxWidth: "420px",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
-          background: "#ffffff",
+          maxWidth: "400px",
+          padding: "25px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          background: "#fff",
         }}
       >
         <h2
           style={{
             textAlign: "center",
             marginBottom: "20px",
-            fontSize: "26px",
-            fontWeight: "600",
+            fontSize: "22px",
+            fontWeight: "500",
             color: "#333",
           }}
         >
-          SMIT Portal Signup
+          Signup
         </h2>
         <Form name="signup" onFinish={onFinish} layout="vertical">
           <Form.Item
-            label={
-              <label
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#555",
-                }}
-              >
-                Name
-              </label>
-            }
+            label="Name"
             name="name"
             rules={[{ required: true, message: "Please input your name!" }]}
           >
-            <Input
-              placeholder="Enter your name"
-              size="large"
-              style={{ borderRadius: "8px" }}
-            />
+            <Input placeholder="Enter your name" size="large" />
           </Form.Item>
           <Form.Item
-            label={
-              <label
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#555",
-                }}
-              >
-                Email
-              </label>
-            }
+            label="Email"
             name="email"
             rules={[{ required: true, message: "Please input your email!" }]}
           >
-            <Input
-              placeholder="Enter your email"
-              size="large"
-              style={{ borderRadius: "8px" }}
-            />
+            <Input placeholder="Enter your email" size="large" />
           </Form.Item>
           <Form.Item
-            label={
-              <label
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#555",
-                }}
-              >
-                Password
-              </label>
-            }
+            label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password
-              placeholder="Enter your password"
-              size="large"
-              style={{ borderRadius: "8px" }}
-            />
+            <Input.Password placeholder="Enter your password" size="large" />
           </Form.Item>
           <Form.Item>
             <Button
@@ -284,12 +272,9 @@ export default function SignUp() {
               htmlType="submit"
               style={{
                 width: "100%",
-                padding: "10px 0",
-                borderRadius: "8px",
-                background: "linear-gradient(135deg, #667eea, #764ba2)",
-                border: "none",
+                padding: "10px",
+                borderRadius: "5px",
                 fontSize: "16px",
-                fontWeight: "bold",
               }}
               size="large"
               loading={loading}
@@ -298,13 +283,11 @@ export default function SignUp() {
             </Button>
           </Form.Item>
         </Form>
-
-        {/* Login Link Styled */}
         <div
           style={{
             fontSize: "14px",
             textAlign: "center",
-            color: "#555",
+            color: "#777",
             marginTop: "16px",
           }}
         >
@@ -312,8 +295,8 @@ export default function SignUp() {
           <Link
             to="/login"
             style={{
-              color: "#667eea",
-              fontWeight: "bold",
+              color: "#1890ff",
+              fontWeight: "500",
               textDecoration: "none",
             }}
           >

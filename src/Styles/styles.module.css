@@ -69,3 +69,26 @@
 .table-responsive {
     overflow-x: auto;
 }
+
+
+
+
+
+
+
+
+
+/* hakahton Css */
+
+.generelButton {
+  color: white; /* text-white */
+  background-color: #3b82f6; /* bg-blue-500 */
+  font-weight: bold; /* font-bold */
+  padding: 0.5rem 1.5rem; /* py-2 px-6 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition: background-color 0.3s; /* transition duration-300 */
+}
+
+.generelButton:hover {
+  background-color: #2563eb; /* hover:bg-blue-600 */
+}
