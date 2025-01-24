@@ -175,9 +175,10 @@ export const Login = () => {
       message.success("Login Successfully");
 
       setTimeout(() => {
-        if (role === "student") navigate("/studentDashboard");
-        else if (role === "teacher") navigate("/teacherDashboard");
-        else if (role === "admin") navigate("/admin");
+        navigate("/")
+        // if (role === "student") navigate("/studentDashboard");
+        // else if (role === "teacher") navigate("/teacherDashboard");
+        // else if (role === "admin") navigate("/admin");
       }, 1000);
     } catch (err) {
       console.error("Login failed", err);
