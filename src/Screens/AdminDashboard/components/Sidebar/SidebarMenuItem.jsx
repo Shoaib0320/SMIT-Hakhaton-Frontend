@@ -1,14 +1,14 @@
 import React from "react"
 
-const SidebarMenuItem = ({ icon, title }) => {
-    return (
-      <div className="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
-        {icon}
-        <div>{title}</div>
-      </div>
-    );
-  };
-  
-  export default SidebarMenuItem;
-  
+
+const SidebarMenuItem = ({ title, icon, isOpen }) => {
+  return (
+    <div className="hover:bg-gray-800 cursor-pointer p-2 rounded-md transition-all duration-200 ease-in-out flex items-center">
+      <div className="mr-2 text-white">{icon}</div>
+      {isOpen && <span className="text-white">{title}</span>}
+    </div>
+  )
+}
+
+export default SidebarMenuItem
 

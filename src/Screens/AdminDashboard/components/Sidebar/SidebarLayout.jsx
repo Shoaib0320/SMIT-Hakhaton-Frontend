@@ -5,6 +5,7 @@ import Style from "@/Styles/styles.module.css"
 import { Avatar } from "antd"
 import SidebarMenuItem from "./SidebarMenuItem"
 import { Dashboard } from "@mui/icons-material"
+import { Home, School, ShoppingCart } from "lucide-react"
 
 const SidebarLayout = () => {
     const { user, logout } = useAuth()
@@ -14,10 +15,16 @@ const SidebarLayout = () => {
         setIsSidebarOpen(!isSidebarOpen)
     }
 
+    const menuItems = [
+        { title: "Dashboard", icon: <Dashboard />, link: "/admin" },
+        { title: "Courses", icon: <School />, link: "/course" },
+        { title: "Products", icon: <ShoppingCart />, link: "#" },
+        { title: "Orders", icon: <Home />, link: "#" },
+    ]
+
     return (
         <>
             {/* full tailwind config using javascript */}
-            {/* https://github.com/neurolinker/popice */}
             <div className="fixed w-full z-30 flex bg-white dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10">
                 <div className="logo ml-12 dark:text-white  transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
                     Admin Dashboard
@@ -52,7 +59,9 @@ const SidebarLayout = () => {
                 </div>
             </div>
             <aside
-                className={`w-60 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ${isSidebarOpen ? "translate-x-0" : "-translate-x-48"}`}
+                // className={`w-60 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ${isSidebarOpen ? "translate-x-0" : "-translate-x-48"}`}
+                className={`w-60 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ${isSidebarOpen ? "translate-x-0" : "-translate-x-48"
+                    }`}
             >
                 {/* open sidebar button */}
                 <div className="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#1E293B]  absolute top-2 rounded-full h-12">
@@ -144,92 +153,17 @@ const SidebarLayout = () => {
                     </svg>
                 </div>
                 {/* MAX SIDEBAR*/}
-                <div
-                    className={`max ${isSidebarOpen ? "flex" : "hidden"} text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]`}
-                >
-                    <Link to={'/admin'}>
-                        <SidebarMenuItem
-                            title="Dashboard"
-                            icon={
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-4 h-4"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-                                    />
-                                </svg>
-                            }
-                        />
-                    </Link>
-
-                    <Link to={'/course'}>
-                        <SidebarMenuItem
-                            title="Courses"
-                            icon={
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-4 h-4"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M16.875 8.25l-1.5-1.5-4.5 4.5-1.5-1.5-1.5 1.5 4.5 4.5-1.5 1.5 1.5 1.5 4.5-4.5 1.5 1.5 1.5-1.5-4.5-4.5z"
-                                    />
-                                </svg>
-                            }
-                        />
-                    </Link>
-
-                    <SidebarMenuItem
-                        title="Products"
-                        icon={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-4 h-4"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
-                                />
-                            </svg>
-                        }
-                    />
-                    <SidebarMenuItem
-                        title="Orders"
-                        icon={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-4 h-4"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-                            </svg>
-                        }
-                    />
+                <div className={`mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]`}>
+                    {menuItems.map((item, index) => (
+                        <Link to={item.link} key={index}>
+                            <SidebarMenuItem title={item.title} icon={item.icon} isOpen={isSidebarOpen} />
+                        </Link>
+                    ))}
                 </div>
                 {/* MINI SIDEBAR*/}
                 <div
-                    className={`mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)] ${isSidebarOpen ? "hidden" : "flex"}`}
+                    // className={`mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)] ${isSidebarOpen ? "hidden" : "flex"}`}
+                    className={`mt-20 ${isSidebarOpen ? "hidden" : "flex flex-col gap-5"}`}
                 >
                     <SidebarMenuItem
                         title="Dashboard"
