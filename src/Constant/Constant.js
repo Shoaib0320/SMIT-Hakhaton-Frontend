@@ -9,7 +9,7 @@ export const AppRoutes = {
   login: BASE_URL + "users/login",
   logout: BASE_URL + "users/logout",
   getUserData: BASE_URL + "users/profile", // New route for getting user data
-  getAllUser: BASE_URL + "users/getAllUsers", // New route for getting user data
+  // getAllUser: BASE_URL + "users/getAllUsers", // New route for getting user data
   // Course Routes
   getCourses: BASE_URL + "courses",
   addCourse: BASE_URL + "courses",
