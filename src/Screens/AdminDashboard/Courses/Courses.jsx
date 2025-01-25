@@ -3,6 +3,7 @@ import { Course } from "@/Components/Course-Pages/Course";
 import { Batches } from "@/Components/Course-Pages/Batches";
 import { Section } from "@/Components/Course-Pages/Section";
 import Layout from "@/Components/Sidebar/Layout";
+import SidebarLayout from "../components/Sidebar/SidebarLayout";
 
 
 export const Courses = () => {
@@ -17,7 +18,8 @@ export const Courses = () => {
   return (
     
     <div className="min-h-screen">
-      <Layout />
+      {/* <Layout /> */}
+      <SidebarLayout />
       <div className="container mx-auto px-4 py-8">
         {/* Tabs navigation */}
         <div className="mb-4 flex flex-wrap justify-center gap-4">
@@ -41,7 +43,7 @@ export const Courses = () => {
           // className="p-4 bg-gray-50 rounded-lg shadow-lg border-2 border-gray-300 max-w-full mx-auto"
         >
           {/* Content section adjusted for both mobile and desktop */}
-          <div className="h-full flex flex-col">
+          <div className="h-full flex flex-col py-20 lg:ml-20 md:ml-20 sm:ml-4">
             {tabs[activeTabIndex].component}
           </div>
         </div>

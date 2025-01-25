@@ -20,7 +20,7 @@ export default function WelcomeScreen() {
           />
 
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-            Welcome to SMIT Portal
+            Welcome to SMIT Hakhaton
           </h1>
 
           <p className="text-gray-600 text-lg mb-6">
