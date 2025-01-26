@@ -21,10 +21,9 @@ export default function Navbar() {
 
     return (
         <Disclosure as="nav" className="bg-gray-800">
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            {/* <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        {/* Mobile menu button*/}
                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Open main menu</span>
@@ -71,7 +70,6 @@ export default function Navbar() {
 
                         {user ? (
                             <>
-                                {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
                                         <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
@@ -122,7 +120,7 @@ export default function Navbar() {
                                                 className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                                             >
                                                 Sign out
-                                            </a> */}
+                                            </a> 
                                             <button
                                                 className="text-white bg-red-500 font-bold py-2 px-6 rounded-lg hover:bg-red-600 transition duration-300"
                                                 onClick={logout}
@@ -162,7 +160,88 @@ export default function Navbar() {
                         </DisclosureButton>
                     ))}
                 </div>
-            </DisclosurePanel>
+            </DisclosurePanel> */}
+
+            {/* Top Bar */}
+            <div className="bg-gray-100 py-2 px-4 text-sm">
+                <div className="container mx-auto flex flex-wrap justify-between items-center">
+                    <div className="flex flex-wrap gap-4">
+                        <a
+                            href="mailto:info@saylaniwelfare.com"
+                            className="flex items-center gap-2 text-gray-600 hover:text-[#0D6DB7]"
+                        >
+                            <Mail className="h-4 w-4" />
+                            info@saylaniwelfare.com
+                        </a>
+                        <a
+                            href="tel:021-111-729-526"
+                            className="flex items-center gap-2 text-gray-600 hover:text-[#0D6DB7]"
+                        >
+                            <Phone className="h-4 w-4" />
+                            021-111-729-526
+                        </a>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <span className="text-gray-600">Visit Our other websites:</span>
+                        <div className="flex gap-2">
+                            {["🇬🇧", "🇺🇸", "🇨🇦", "🇹🇷"].map((flag) => (
+                                <button
+                                    key={flag}
+                                    className="hover:opacity-75 transition-opacity"
+                                >
+                                    {flag}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Navigation */}
+            <header className="sticky top-0 bg-white border-b shadow-sm z-50">
+                <div className="container mx-auto py-4 px-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-12">
+                            <Image
+                                src="https://saylaniwelfare.com/static/media/logo_saylaniwelfare.22bf709605809177256c.png"
+                                alt="Saylani Welfare Logo"
+                                width={200}
+                                height={60}
+                                className="h-12 w-auto"
+                            />
+                            <nav className="hidden md:flex gap-8">
+                                <a href="#" className="text-gray-600 hover:text-[#0D6DB7]">
+                                    About
+                                </a>
+                                <a href="#" className="text-gray-600 hover:text-[#0D6DB7]">
+                                    Services
+                                </a>
+                                <a href="#" className="text-gray-600 hover:text-[#0D6DB7]">
+                                    Media
+                                </a>
+                                <a href="#" className="text-gray-600 hover:text-[#0D6DB7]">
+                                    Contact Us
+                                </a>
+                                <a href="#" className="text-gray-600 hover:text-[#0D6DB7]">
+                                    Bank Details
+                                </a>
+                                <a href="#" className="text-[#8DC63F] hover:text-[#7ab32f]">
+                                    Other Websites
+                                </a>
+                            </nav>
+                        </div>
+                        <div className="flex gap-4">
+                            <Button className="bg-[#0D6DB7] hover:bg-[#0b5a9a]">DONATE NOW</Button>
+                            <Button
+                                variant="outline"
+                                className="border-[#8DC63F] text-[#8DC63F] hover:bg-[#8DC63F] hover:text-white"
+                            >
+                                BE A SPONSOR
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </header>
         </Disclosure>
     )
 }
