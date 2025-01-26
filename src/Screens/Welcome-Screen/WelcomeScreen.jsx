@@ -63,6 +63,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import Navbar from "@/Components/Navbar/Navbar";
+import Home from "./Home";
 
 const categories = [
   {
@@ -97,7 +98,7 @@ export default function WelcomeScreen() {
       <Navbar />
       <div className="min-h-screen bg-gray-100 text-gray-800">
         {/* Hero Section */}
-        <header className="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-10 px-4 text-center">
+        {/* <header className="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-10 px-4 text-center">
           <h1 className="text-4xl font-bold mb-4">Welcome to Saylani Microfinance</h1>
           <p className="text-lg mb-6">Empowering lives with easy and accessible financial solutions.</p>
           <Button className="px-6 py-3 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-100">
@@ -105,8 +106,7 @@ export default function WelcomeScreen() {
           </Button>
         </header>
 
-        {/* Categories Section */}
-        <main className="py-10 px-4 container mx-auto">
+      <main className="py-10 px-4 container mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-8">Our Loan Categories</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category, index) => (
@@ -144,7 +144,9 @@ export default function WelcomeScreen() {
               </Card>
             ))}
           </div>
-        </main>
+        </main> */}
+
+        <Home />
 
         {/* Footer */}
         <footer className="bg-gray-800 text-white py-6 mt-10">

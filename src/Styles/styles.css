@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+
+    --color1: #184544;
+    --color2: #184544;
+
+
+    --font-family: "Montserrat", serif;
+}
+
+body {
+    font-family: var(--font-family) !important;
+}
+
+/* LOADER */
+
+.card {
+    border: none !important;
+    background-color: var(--bg-color);
+    padding: 1rem 2rem;
+    border-radius: 1.25rem;
+}
+
+.loader {
+
+    font-weight: 500;
+    font-size: 25px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 40px;
+    padding: 10px 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 8px;
+}
+
+.words {
+    overflow: hidden;
+    position: relative;
+}
+
+.words::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    color: var(--color1) !important;
+
+    z-index: 20;
+}
+
+.word {
+    display: block;
+    height: 100%;
+    padding-left: 6px;
+    color: var(--color1) !important;
+    animation: spin_4991 4s infinite;
+}
+
+@keyframes spin_4991 {
+    10% {
+        -webkit-transform: translateY(-102%);
+        transform: translateY(-102%);
+    }
+
+    25% {
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+
+    35% {
+        -webkit-transform: translateY(-202%);
+        transform: translateY(-202%);
+    }
+
+    50% {
+        -webkit-transform: translateY(-200%);
+        transform: translateY(-200%);
+    }
+
+    60% {
+        -webkit-transform: translateY(-302%);
+        transform: translateY(-302%);
+    }
+
+    75% {
+        -webkit-transform: translateY(-300%);
+        transform: translateY(-300%);
+    }
+
+    85% {
+        -webkit-transform: translateY(-402%);
+        transform: translateY(-402%);
+    }
+
+    100% {
+        -webkit-transform: translateY(-400%);
+        transform: translateY(-400%);
+    }
+}
+
+/* LOADER */
+.navbar {
+    transition: 0.8s ease-in-out !important;
+    padding: 15px 2px !important;
+}
+
+.loader-main {
+    /* background-color: var(--color1) !important; */
+    position: fixed;
+    background-color: white !important;
+    height: 100vh;
+    top: 0%;
+    width: 100%;
+    z-index: 100;
+    transition: 0.7s ease-in-out !important;
+
+}
+
+.btn-1 {
+    padding: 10px 15px;
+    border-radius: 0px;
+    color: var(--color1);
+    border-bottom: 2px solid var(--color1) !important;
+    border: none;
+    position: relative;
+    background-color: rgb(243, 241, 241) !important;
+    z-index: 2;
+
+}
+
+.btn-1-hover>i {
+    z-index: -1;
+    /* color: transparent !important; */
+}
+
+.btn-1-hover .btn-1-hover>i {
+    z-index: 1 !important;
+    /* color: white !important; */
+}
+
+.btn-1-hover {
+    visibility: hidden;
+    position: absolute;
+    height: 0%;
+    left: 0%;
+    color: transparent !important;
+    transition: 0.3s ease-in-out !important;
+    bottom: 0%;
+    width: 100%;
+    z-index: -1 !important;
+    background-color: var(--color1);
+}
+
+.btn-1:hover .btn-1-hover {
+    height: 100%;
+    visibility: visible !important;
+    z-index: 2 !important;
+}
+
+.fixtop {
+    background-color: rgb(245, 245, 245) !important;
+    position: fixed !important;
+    top: 0px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+    padding: 0px;
+    z-index: 1111 !important;
+    width: 100%;
+}
+
+.container-1 {
+    background-color: rgb(241, 241, 241);
+}
+
+.col-org {
+    color: var(--color1) !important;
+}
+
+.bg {
+    background-color: var(--color1) !important;
+}
+
+.box1 {
+    padding: 30px !important;
+    left: 20%;
+    width: 50%;
+    bottom: 1%;
+}
+
+.card-1 {
+    position: relative !important;
+    padding: 20px 0px !important;
+    z-index: 12 !important;
+    border-bottom: 1px solid white !important;
+}
+
+.card-1:hover {
+    color: var(--color1) !important;
+}
+
+.card-1-hover {
+    height: 0%;
+
+    bottom: 0%;
+    width: 100%;
+    position: absolute;
+
+    transition: 0.6s ease-in-out !important;
+    z-index: -1 !important;
+}
+
+.card-1:hover .card-1-hover {
+    height: 100%;
+    z-index: -1 !important;
+
+    background-color: rgb(255, 255, 255);
+}
+
+.card-1:hover {
+    color: var(--color1) !important;
+}
+
+
+/* ABOUT US START */
+.about-banner {
+    height: 70vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    /* background-image: url("assets/image/cover-1.jpg"); */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.811), rgba(0, 0, 0, 0.572)), url("assets/image/cover-1.jpg");
+    ;
+}
+
+/* ABOUT US END */

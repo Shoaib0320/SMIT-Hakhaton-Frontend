@@ -6,6 +6,7 @@ import SignUp from "@/Screens/Authentication/Signup";
 import { AuthProvider } from "@/Context/AuthContext";
 import Admin from "@/Screens/AdminDashboard/admin/Admin";
 import { Category } from "@/Screens/AdminDashboard/Category/Category";
+import SingleCategory from "@/Screens/Welcome-Screen/SingleCategory";
 
 export const RouterConfig = () => {
 	return (
@@ -18,6 +19,8 @@ export const RouterConfig = () => {
 
 					<Route path="/admin" element={<Admin />} />
 					<Route path="/category" element={<Category />} />
+
+					<Route path="/category/:id" element={<SingleCategory />} />
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>
