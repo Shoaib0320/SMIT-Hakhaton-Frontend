@@ -21,49 +21,50 @@ import {
 } from "@ant-design/icons";
 import styles from "../../Styles/styles.module.css";
 import { AppRoutes } from "@/Constant/Constant";
-import { uploadCourseImage } from "../Upload Images/UploadCourseImage";
 
-export const Course = () => {
+export const Categories = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [viewDrawerVisible, setViewDrawerVisible] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const [courses, setCourses] = useState([]);
+  const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
-  const [viewingCourse, setViewingCourse] = useState(null);
+  const [viewingCategory, setViewingCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    fetchCourses();
+    fetchCategory();
   }, []);
 
-  const fetchCourses = async () => {
+  const fetchCategory = async () => {
     try {
-      const response = await fetch(AppRoutes.getCourses);
-      if (!response.ok) throw new Error("Failed to fetch courses");
+      const response = await fetch(AppRoutes.getCategoriesWithSubCategories);
+      if (!response.ok) throw new Error("Failed to fetch category");
+      console.log();
+      
       const data = await response.json();
-      setCourses(data.data);
+      setCategory(data.data);
     } catch (error) {
-      console.error("Error fetching courses:", error);
-      message.error("Failed to fetch courses");
+      console.error("Error fetching category:", error);
+      message.error("Failed to fetch category");
     }
   };
 
-  const deleteCourse = async (courseId) => {
+  const deleteCategory = async (courseId) => {
     try {
-      const response = await fetch(`${AppRoutes.deleteCourse}/${courseId}`, {
+      const response = await fetch(`${AppRoutes.deleteCategory}/${courseId}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error("Failed to delete course");
-      message.success("Course deleted successfully");
-      fetchCourses();
+      if (!response.ok) throw new Error("Failed to delete category");
+      message.success("Category deleted successfully");
+      fetchCategory();
     } catch (error) {
-      console.error("Error deleting course:", error);
-      message.error("Failed to delete course");
+      console.error("Error deleting category:", error);
+      message.error("Failed to delete category");
     }
   };
 
@@ -89,6 +90,7 @@ export const Course = () => {
 
   const handleFileChange = (info) => {
     setFileList(
+
       info.fileList.map((file) => ({
         ...file,
         preview: URL.createObjectURL(file.originFileObj),
@@ -97,74 +99,70 @@ export const Course = () => {
   };
 
   const showViewDrawer = (course) => {
-    setViewingCourse(course);
+    setViewingCategory(course);
     setViewDrawerVisible(true);
   };
 
   const closeViewDrawer = () => {
     setViewDrawerVisible(false);
-    setViewingCourse(null);
+    setViewingCategory(null);
   };
 
-  const handleAddCourse = async (values) => {
+  const handleAddCategory = async (values) => {
     setLoading(true);
     try {
-      const uploadedImageUrl = await uploadCourseImage(
-        fileList[0]?.originFileObj
-      );
-      if (!uploadedImageUrl) throw new Error("Image upload failed");
+      // const uploadedImageUrl = await uploadCourseImage(
+      //   fileList[0]?.originFileObj
+      // );
+      // if (!uploadedImageUrl) throw new Error("Image upload failed");
 
-      const courseData = { ...values, thumbnail: uploadedImageUrl };
+      const categoryData = { ...values, };
 
-      const response = await fetch(AppRoutes.addCourse, {
+      const response = await fetch(AppRoutes.addCategory, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(courseData),
+        body: JSON.stringify(categoryData),
       });
 
-      if (!response.ok) throw new Error("Failed to add course");
-      message.success("Course added successfully");
-      fetchCourses();
+      if (!response.ok) throw new Error("Failed to add Category");
+      message.success("Category added successfully");
+      fetchCategory();
       closeDrawer();
     } catch (error) {
-      console.error("Error adding course:", error);
-      message.error("Failed to add course");
+      console.error("Error adding Category:", error);
+      message.error("Failed to add Category");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUpdateCourse = async (values) => {
+  const handleUpdateCategory = async (values) => {
     setLoading(true);
     try {
-      const uploadedImageUrl = fileList[0]?.originFileObj
-        ? await uploadCourseImage(fileList[0].originFileObj)
-        : editingCourse.thumbnail;
-
-      const updatedCourse = { ...values, thumbnail: uploadedImageUrl };
+      const updatedCategory = { ...values, };
 
       const response = await fetch(
-        `${AppRoutes.updateCourse}/${editingCourse._id}`,
+        `${AppRoutes.updateCategory}/${editingCourse._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedCourse),
+          body: JSON.stringify(updatedCategory),
         }
       );
 
-      if (!response.ok) throw new Error("Failed to update course");
-      message.success("Course updated successfully");
-      fetchCourses();
+      if (!response.ok) throw new Error("Failed to update category");
+      message.success("Category updated successfully");
+      fetchCategory();
       closeModal();
     } catch (error) {
-      console.error("Error updating course:", error);
-      message.error("Failed to update course");
+      console.error("Error updating category:", error);
+      message.error("Failed to update category");
     } finally {
       setLoading(false);
     }
   };
 
-  const paginatedCourses = courses.slice(
+  const paginatedCategory = category.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -172,31 +170,24 @@ export const Course = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        <h1>Courses</h1>
+        <h1>Categories</h1>
         <Button type="primary"
           className="rounded-lg shadow-lg bg-[#0561a6] text-white hover:text-blue-700"
-          onClick={showDrawer}>Add Course</Button>
+          onClick={showDrawer}>Add Category</Button>
       </div>
 
       <Row gutter={[16, 16]}>
-        {paginatedCourses.map((course) => (
-          <Col xs={24} sm={12} md={8} lg={8} key={course._id}>
+        {paginatedCategory.map((category) => (
+          <Col xs={24} sm={12} md={8} lg={8} key={category._id}>
             <Card
               hoverable
               className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-500 ease-in-out flex flex-col"
-              cover={
-                <img
-                  alt="thumbnail"
-                  src={course.thumbnail}
-                  className="h-48 object-cover rounded-t-lg"
-                />
-              }
               actions={[
-                <EyeOutlined onClick={() => showViewDrawer(course)} key="view" style={{ color: "#0561a6" }} />,
-                <EditFilled onClick={() => showEditModal(course)} key="edit" style={{ color: "#0561a6" }} />,
+                <EyeOutlined onClick={() => showViewDrawer(category)} key="view" style={{ color: "#0561a6" }} />,
+                <EditFilled onClick={() => showEditModal(category)} key="edit" style={{ color: "#0561a6" }} />,
                 <Popconfirm
                   title="Are you sure to delete this course?"
-                  onConfirm={() => deleteCourse(course._id)}
+                  onConfirm={() => deleteCategory(category._id)}
                   okText="Yes"
                   cancelText="No"
                   key="delete"
@@ -206,8 +197,8 @@ export const Course = () => {
               ]}
             >
               <Card.Meta
-                title={<h3 className="text-2xl font-serif mb-4 text-[#0561a6] hover:text-blue-700 transition-all duration-300">{course.title}</h3>}
-                description={<p className="text-sm text-gray-500">Duration: {course.duration}</p>}
+                title={<h3 className="text-2xl font-serif mb-4 text-[#0561a6] hover:text-blue-700 transition-all duration-300">{category.title}</h3>}
+                maxloan={<p className="text-sm text-gray-500">Duration: {category.maxLoan}</p>}
               />
             </Card>
           </Col>
@@ -217,7 +208,7 @@ export const Course = () => {
       <Pagination
         current={currentPage}
         pageSize={pageSize}
-        total={courses.length}
+        total={category.length}
         onChange={(page) => setCurrentPage(page)}
         style={{ marginTop: "20px", textAlign: "center" }}
       />
@@ -229,54 +220,47 @@ export const Course = () => {
         visible={viewDrawerVisible}
         className="p-4 bg-white rounded-lg shadow-lg"
       >
-        {viewingCourse && (
+        {viewingCategory && (
           <div className="space-y-4">
-            <p><strong>Title:</strong> {viewingCourse.title}</p>
-            <p><strong>Description:</strong> {viewingCourse.description}</p>
-            <p><strong>Duration:</strong> {viewingCourse.duration} </p>
-            <img src={viewingCourse.thumbnail} alt="Thumbnail" style={{ width: "100%", borderRadius: '10px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }} />
+            <p><strong>Title:</strong> {viewingCategory.title}</p>
+            <p><strong>Description:</strong> {viewingCategory.description}</p>
+            <p><strong>MaxLoan:</strong> {viewingCategory.maxloan}</p>
+            <p><strong>Loan Period:</strong> {viewingCategory.loanPeriod}</p>
           </div>
         )}
       </Drawer>
 
       {/* Drawer for adding course */}
       <Drawer
-        title="Add New Course"
+        title="Add New Category"
         width={400}
         onClose={closeDrawer}
         visible={drawerVisible}
         footer={null}
       >
-        <Form layout="vertical" onFinish={handleAddCourse}>
+        <Form layout="vertical" onFinish={handleAddCategory}>
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-            <Input placeholder="Enter course title" />
+            <Input placeholder="Enter category title" />
           </Form.Item>
           <Form.Item label="Description" name="description" rules={[{ required: true }]}>
-            <Input.TextArea placeholder="Enter course description" />
+            <Input.TextArea placeholder="Enter category description" />
           </Form.Item>
-          <Form.Item label="Duration (hours)" name="duration" rules={[{ required: true }]}>
-            <Input placeholder="Enter duration" style={{ width: "100%" }} />
+          <Form.Item label="MaxLoan" name="maxLoan" rules={[{ required: true }]}>
+            <Input placeholder="Enter maxLoan" />
           </Form.Item>
-          <Form.Item label="Thumbnail Image" name="thumbnail" rules={[{ required: true }]}>
-            <Upload
-              listType="picture"
-              fileList={fileList}
-              onChange={handleFileChange}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
-            </Upload>
+          <Form.Item label="Loan Period" name="loanPeriod" rules={[{ required: true }]}>
+            <Input placeholder="Enter loanPeriod" />
           </Form.Item>
           <Button type="primary"
             className="rounded-lg shadow-lg bg-[#0561a6] text-white hover:text-blue-700"
             htmlType="submit" loading={loading} block>
-            Add Course
+            Add Category
           </Button>
         </Form>
       </Drawer>
 
       <Modal
-        title={<span style={{ fontSize: '20px', fontWeight: 'bold', color: '#0561a6' }}>Edit Course</span>}
+        title={<span style={{ fontSize: '20px', fontWeight: 'bold', color: '#0561a6' }}>Edit Category</span>}
         visible={modalVisible}
         onCancel={closeModal}
         footer={null}
@@ -285,7 +269,7 @@ export const Course = () => {
       >
         <Form
           form={form}
-          onFinish={handleUpdateCourse}
+          onFinish={handleUpdateCategory}
           layout="vertical"
           style={{ maxWidth: '100%' }}
         >
@@ -294,7 +278,7 @@ export const Course = () => {
             name="title"
             rules={[{ required: true, message: 'Please enter the title!' }]}
           >
-            <Input placeholder="Enter course title" style={{ padding: '10px', borderRadius: '8px' }} />
+            <Input placeholder="Enter category title" style={{ padding: '10px', borderRadius: '8px' }} />
           </Form.Item>
 
           <Form.Item
@@ -302,36 +286,17 @@ export const Course = () => {
             name="description"
           >
             <Input.TextArea
-              placeholder="Enter course description"
+              placeholder="Enter category description"
               style={{ padding: '10px', borderRadius: '8px' }}
               rows={4}
             />
           </Form.Item>
 
-          <Form.Item
-            label={<span style={{ fontWeight: '500' }}>Duration</span>}
-            name="duration"
-            rules={[{ required: true, message: 'Please enter the duration!' }]}
-          >
-            <Input placeholder="Enter course Duration" style={{ padding: '10px', borderRadius: '8px' }} />
+          <Form.Item label="MaxLoan" name="maxLoan" rules={[{ required: true }]}>
+            <Input placeholder="Enter maxLoan" />
           </Form.Item>
-
-          <Form.Item label={<span style={{ fontWeight: '500' }}>Thumbnail Image</span>}>
-            <Upload
-              listType="picture-card"
-              fileList={fileList}
-              onChange={handleFileChange}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
-            </Upload>
-            {editingCourse?.thumbnail && !fileList.length && (
-              <img
-                src={editingCourse.thumbnail}
-                alt="Thumbnail"
-                style={{ width: '100%', marginTop: '10px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}
-              />
-            )}
+          <Form.Item label="Loan Period" name="loanPeriod" rules={[{ required: true }]}>
+            <Input placeholder="Enter loanPeriod" />
           </Form.Item>
 
           <Button
@@ -347,11 +312,10 @@ export const Course = () => {
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
             }}
           >
-            Update Course
+            Update Category
           </Button>
         </Form>
       </Modal>
-
     </>
   );
 };

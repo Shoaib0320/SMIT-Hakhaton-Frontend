@@ -10,7 +10,6 @@ const Admin = () => {
         <p>This is the content for the Admin page.</p>
       </div>
     </>
-
   );
 };
 

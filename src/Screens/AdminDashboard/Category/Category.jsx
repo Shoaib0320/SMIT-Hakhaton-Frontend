@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Course } from "@/Components/Course-Pages/Course";
-import { Batches } from "@/Components/Course-Pages/Batches";
 import { Section } from "@/Components/Course-Pages/Section";
 import Layout from "@/Components/Sidebar/Layout";
 import SidebarLayout from "../components/Sidebar/SidebarLayout";
 
+import { SubCategory } from "@/Components/Course-Pages/SubCategory";
+import { Categories } from "@/Components/Course-Pages/Category";
+import LoanCalculatorForm from "@/Components/LoanCalculaterForm/LoanCalculaterForm";
 
-export const Courses = () => {
+
+export const Category = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const tabs = [
-    { value: "course", label: "Course", component: <Course /> },
-    { value: "batch", label: "Batches", component: <Batches /> },
-    { value: "section", label: "Section", component: <Section /> },
+    { value: "category", label: "Category", component: <Categories /> },
+    { value: "subCategory", label: "SubCategory", component: <SubCategory /> },
+    { value: "loanCalculate", label: "LoanCalculatorForm", component: <LoanCalculatorForm /> },
   ];
 
   return (
