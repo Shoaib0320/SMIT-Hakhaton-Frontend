@@ -95,7 +95,7 @@ const categories = [
 export default function WelcomeScreen() {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="min-h-screen bg-gray-100 text-gray-800">
         {/* Hero Section */}
         {/* <header className="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-10 px-4 text-center">
