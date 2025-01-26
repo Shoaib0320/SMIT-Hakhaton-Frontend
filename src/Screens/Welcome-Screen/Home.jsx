@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../../Styles/Styles.css"
+import "../../Styles/styles.css"
 
 import { Link } from 'react-router-dom'
 // IMAGES

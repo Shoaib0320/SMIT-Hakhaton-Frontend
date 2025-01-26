@@ -1,0 +1,183 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+  }
+  
+  /* Loader */
+  .loader {
+    text-align: center;
+  }
+  
+  .loader p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 0.5rem;
+  }
+  
+  .loader .words span {
+    display: block;
+    font-size: 1.5rem;
+    color: #555;
+    animation: fadeIn 1.5s ease-in-out infinite;
+  }
+  
+  .loader .words span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .loader .words span:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .loader .words span:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  
+  /* Hero Section */
+  h1 {
+    font-size: 2.5rem;
+    color: #0d6efd;
+    line-height: 1.4;
+  }
+  
+  h1 span {
+    color: #333;
+  }
+  
+  p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  button {
+    background-color: #0d6efd;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Stats Section */
+  .flex div h1 {
+    color: #0d6efd;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .flex div p {
+    color: #333;
+    font-size: 1rem;
+    margin-top: 5px;
+  }
+  
+  /* Our Loans Section */
+  .bg-gray-900 {
+    background-color: #111827;
+  }
+  
+  .bg-gray-800 {
+    background-color: #1f2937;
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .flex-wrap .card {
+    background: #1f2937;
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    text-align: left;
+    width: calc(50% - 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .flex-wrap .card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .flex-wrap .card h5 {
+    background-color: #0d6efd;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .flex-wrap .card a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .flex-wrap .card a:hover {
+    color: #0056b3;
+  }
+  
+  /* Responsive */
+  @media screen and (max-width: 1024px) {
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .flex-wrap .card {
+      width: 100%;
+    }
+  
+    .stats div {
+      text-align: center;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .stats div {
+      margin-bottom: 1.5rem;
+    }
+  }
+  
