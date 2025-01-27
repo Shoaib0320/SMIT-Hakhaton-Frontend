@@ -16,6 +16,10 @@ export const AppRoutes = {
   updateCategory: BASE_URL + "category/",
   deleteCategory: BASE_URL + "category/",
 
+  submitLoan: BASE_URL + "users/submit-loan",
+  generateSlip: BASE_URL + "users/generate-slip",
+  getLoanRequests: BASE_URL + "users/getLoanRequests",
+
   //
   getCategoriesWithSubCategories: BASE_URL + "category/with-subcategories",
   getSingleCategories: BASE_URL + "category/singleCategory/",

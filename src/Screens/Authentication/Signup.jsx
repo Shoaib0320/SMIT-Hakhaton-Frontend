@@ -166,7 +166,7 @@ export default function SignUp() {
 
   return (
     <div>
-      <AnimatedBackground />
+      {/* <AnimatedBackground /> */}
       <div
         style={{
           display: "flex",
