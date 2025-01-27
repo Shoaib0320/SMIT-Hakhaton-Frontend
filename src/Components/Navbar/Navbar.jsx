@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 import Style from '@/Styles/styles.module.css'
 import { Avatar, Button } from "antd";
+import { Mail, Phone } from 'lucide-react';
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -202,7 +203,7 @@ export default function Navbar() {
                 <div className="container mx-auto py-4 px-4">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-12">
-                            <Image
+                            <img
                                 src="https://saylaniwelfare.com/static/media/logo_saylaniwelfare.22bf709605809177256c.png"
                                 alt="Saylani Welfare Logo"
                                 width={200}

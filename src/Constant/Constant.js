@@ -1,8 +1,8 @@
 const devUrl = import.meta.env.VITE_BACKEND_DEV_URL;
 const prodUrl = import.meta.env.VITE_BACKEND_PROD_URL
 
-// export const BASE_URL = devUrl;
-export const BASE_URL = prodUrl;
+export const BASE_URL = devUrl;
+// export const BASE_URL = prodUrl;
 
 export const AppRoutes = {
   signUp: BASE_URL + "users/signup",
