@@ -148,6 +148,7 @@ export default function SignUp() {
         name: values.name,
         email: values.email,
         password: values.password,
+        cnic: values.cnic,
       });
 
       console.log("response", response);
@@ -222,6 +223,19 @@ export default function SignUp() {
               rules={[{ required: true, message: "Please input your email!" }]}
             >
               <Input placeholder="Email" size="large" />
+            </Form.Item>
+            <Form.Item
+              label={
+                <label className="text-white text-md uppercase font-bold">
+                  Cnic
+                </label>
+              }
+              name="cnic"
+              rules={[
+                { required: true, message: "Please input your cnic!" },
+              ]}
+            >
+              <Input placeholder="Cnic" size="large" />
             </Form.Item>
             <Form.Item
               label={
