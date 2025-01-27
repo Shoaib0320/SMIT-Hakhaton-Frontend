@@ -41,6 +41,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
+import HeroSection from "./HeroSection/HeroSection";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -57,6 +58,7 @@ const LandingPage = () => {
             <Navbar />
             <div className="landing-page min-h-screen bg-gray-50 flex flex-col items-center p-6">
                 <h1 className="text-4xl font-bold text-blue-600 mb-4">Saylani Microfinance App</h1>
+                <HeroSection />
                 <p className="text-lg text-gray-700 mb-6">Select a loan category to proceed:</p>
                 <div className="categories grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
                     {categories.map((category, index) => (

@@ -231,7 +231,7 @@ export default function Navbar() {
                                 </a>
                             </nav>
                         </div>
-                        <div className="flex gap-4">
+                        {/* <div className="flex gap-4">
                             <Button className="bg-[#0D6DB7] hover:bg-[#0b5a9a]">DONATE NOW</Button>
                             <Button
                                 variant="outline"
@@ -239,7 +239,17 @@ export default function Navbar() {
                             >
                                 BE A SPONSOR
                             </Button>
-                        </div>
+                        </div> */}
+                        {
+                            user ?
+
+                                <p>{user.name}</p>
+
+                                :
+                                <Link to={'/login'}>
+                                    <Button>Login</Button>
+                                </Link>
+                        }
                     </div>
                 </div>
             </header>

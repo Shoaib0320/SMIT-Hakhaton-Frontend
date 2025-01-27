@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -68,6 +69,8 @@ const LoanCalculator = () => {
           <h4 className="text-xl font-bold text-green-600 mb-4">Loan Calculation Result</h4>
           <p className="text-lg text-gray-700">Total Loan Amount: <span className="font-bold">{result.totalLoan.toFixed(2)} PKR</span></p>
           <p className="text-lg text-gray-700">Monthly Installment: <span className="font-bold">{result.monthlyInstallment.toFixed(2)} PKR</span></p>
+
+          <Button>Procced</Button>
         </div>
       )}
     </div>
