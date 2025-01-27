@@ -5,7 +5,6 @@ import SidebarLayout from "../components/Sidebar/SidebarLayout";
 
 import { SubCategory } from "@/Components/Course-Pages/SubCategory";
 import { Categories } from "@/Components/Course-Pages/Category";
-import LoanCalculatorForm from "@/Components/LoanCalculaterForm/LoanCalculaterForm";
 
 
 export const Category = () => {
@@ -14,7 +13,6 @@ export const Category = () => {
   const tabs = [
     { value: "category", label: "Category", component: <Categories /> },
     { value: "subCategory", label: "SubCategory", component: <SubCategory /> },
-    { value: "loanCalculate", label: "LoanCalculatorForm", component: <LoanCalculatorForm /> },
   ];
 
   return (

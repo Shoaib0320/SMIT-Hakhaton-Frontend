@@ -19,6 +19,7 @@ export const AppRoutes = {
   submitLoan: BASE_URL + "users/submit-loan",
   generateSlip: BASE_URL + "users/generate-slip",
   getLoanRequests: BASE_URL + "users/getLoanRequests",
+  getAllLoanRequests: BASE_URL + "users/getAllLoanRequests",
 
   //
   getCategoriesWithSubCategories: BASE_URL + "category/with-subcategories",

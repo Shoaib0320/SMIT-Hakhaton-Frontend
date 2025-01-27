@@ -18,7 +18,7 @@ const SidebarLayout = () => {
     const menuItems = [
         { title: "Dashboard", icon: <Dashboard />, link: "/admin" },
         { title: "Courses", icon: <School />, link: "/category" },
-        { title: "Products", icon: <ShoppingCart />, link: "#" },
+        { title: "Requests", icon: <ShoppingCart />, link: "/admin/requests" },
         { title: "Orders", icon: <Home />, link: "#" },
     ]
 

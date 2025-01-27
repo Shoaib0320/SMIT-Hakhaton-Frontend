@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Table, Button, Modal, message } from "antd"
 import axios from "axios"
 import { useAuth } from "@/Context/AuthContext"
@@ -6,30 +6,24 @@ import { AppRoutes } from "@/Constant/Constant"
 
 const LoanRequestsPage = () => {
   const [loanRequests, setLoanRequests] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [slipModalOpen, setSlipModalOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [slipModalVisible, setSlipModalVisible] = useState(false)
   const [currentSlip, setCurrentSlip] = useState(null)
   const { user } = useAuth()
 
   useEffect(() => {
-    if (user && user._id) {
+    if (user) {
       fetchLoanRequests()
+    } else {
+      setLoading(false)
+      message.error("User not authenticated. Please log in.")
     }
   }, [user])
 
-  console.log('User', user._id);
-  
-
   const fetchLoanRequests = async () => {
-    setLoading(true)
     try {
-      const response = await axios.get(`${AppRoutes.getLoanRequests}/${user._id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      
-      setLoanRequests(response.data.loanRequests)
+      const response = await axios.get(`${AppRoutes.getLoanRequests}/${user._id}`)
+      setLoanRequests(response.data)
     } catch (error) {
       console.error("Error fetching loan requests:", error)
       message.error("Failed to fetch loan requests. Please try again.")
@@ -38,7 +32,7 @@ const LoanRequestsPage = () => {
     }
   }
 
-  const viewSlip = async (loanRequestId) => {
+  const handleViewSlip = async (loanRequestId) => {
     try {
       const response = await axios.post(
         AppRoutes.generateSlip,
@@ -50,7 +44,7 @@ const LoanRequestsPage = () => {
         },
       )
       setCurrentSlip(response.data.slip)
-      setSlipModalOpen(true)
+      setSlipModalVisible(true)
     } catch (error) {
       console.error("Error generating slip:", error)
       message.error("Failed to generate slip. Please try again.")
@@ -64,19 +58,16 @@ const LoanRequestsPage = () => {
       key: "category",
     },
     {
-      title: "Subcategory",
-      dataIndex: "subcategory",
-      key: "subcategory",
-    },
-    {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      render: (amount) => `${amount.toFixed(2)} PKR`,
     },
     {
       title: "Loan Period",
       dataIndex: "loanPeriod",
       key: "loanPeriod",
+      render: (period) => `${period} months`,
     },
     {
       title: "Status",
@@ -86,20 +77,23 @@ const LoanRequestsPage = () => {
     {
       title: "Action",
       key: "action",
-      render: (_, record) => <Button onClick={() => viewSlip(record._id)}>View Slip</Button>,
+      render: (_, record) => <Button onClick={() => handleViewSlip(record._id)}>View Slip</Button>,
     },
   ]
 
+  if (!user) {
+    return <div>Please log in to view your loan requests.</div>
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h2 className="text-3xl font-bold text-blue-600 mb-4">Your Loan Requests</h2>
+      <h1 className="text-3xl font-bold text-blue-600 mb-6">Your Loan Requests</h1>
       <Table columns={columns} dataSource={loanRequests} loading={loading} rowKey="_id" />
-
       <Modal
         title="Appointment Slip"
-        open={slipModalOpen}
-        onOk={() => setSlipModalOpen(false)}
-        onCancel={() => setSlipModalOpen(false)}
+        open={slipModalVisible}
+        onOk={() => setSlipModalVisible(false)}
+        onCancel={() => setSlipModalVisible(false)}
       >
         {currentSlip && (
           <div>
