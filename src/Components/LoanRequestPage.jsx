@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { Table, Button, Modal, message, Tag } from "antd"
+import { Table, Button, Modal, message, Tag, Spin } from "antd"
 import axios from "axios"
 import { useAuth } from "@/Context/AuthContext"
 import { AppRoutes } from "@/Constant/Constant"
 
 const LoanRequestsPage = () => {
-    const [loanRequests, setLoanRequests] = useState([])
+  const [loanRequests, setLoanRequests] = useState([])
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
 
   useEffect(() => {
     if (user) {
       fetchLoanRequests()
-    } else {
-      setLoading(false)
-      message.error("Please log in to view your loan requests.")
     }
   }, [user])
 
@@ -31,6 +28,28 @@ const LoanRequestsPage = () => {
       message.error("Failed to fetch loan requests. Please try again.")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleViewSlip = async (loanRequestId) => {
+    try {
+      const response = await axios.get(`${AppRoutes.generateSlip}/${loanRequestId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+        responseType: "blob",
+      })
+
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement("a")
+      link.href = url
+      link.setAttribute("download", `loan_slip_${loanRequestId}.png`)
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
+    } catch (error) {
+      console.error("Error generating loan slip:", error)
+      message.error("Failed to generate loan slip. Please try again.")
     }
   }
 
@@ -90,6 +109,11 @@ const LoanRequestsPage = () => {
           ))}
         </>
       ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => <Button onClick={() => handleViewSlip(record._id)}>View Loan Slip</Button>,
     },
   ]
 
