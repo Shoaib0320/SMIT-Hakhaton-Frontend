@@ -202,7 +202,7 @@ export default function Navbar() {
     const { user, logout } = useAuth();
   
     return (
-      <Disclosure as="nav" className="bg-gray-100 sticky top-0 z-50">
+      <Disclosure as="nav" className="bg-white shadow-lg sticky top-0 z-50">
         {({ open }) => (
           <>
             {/* Top Bar */}

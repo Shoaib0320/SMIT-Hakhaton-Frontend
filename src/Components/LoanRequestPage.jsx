@@ -242,13 +242,24 @@ const LoanRequestsPage = () => {
         </div>
       )
     },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (_, record) => (
+    //     <Button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition" onClick={() => handleViewSlip(record._id)}>
+    //       View Loan Slip
+    //     </Button>
+    //   ),
+    // },
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition" onClick={() => handleViewSlip(record._id)}>
-          View Loan Slip
-        </Button>
+        record.status === "approved" ? (
+          <Button className="bg-[#0d6db7]  text-white font-semibold px-4 py-2 rounded-lg transition" onClick={() => handleViewSlip(record._id)}>
+            View Loan Slip
+          </Button>
+        ) : null
       ),
     },
   ];
