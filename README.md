@@ -1,94 +1,264 @@
-# Management System (LMS) - Institute
+Saylani Microfinance App Hackathon
 
-Welcome to the **Management System (LMS)** repository! This Learning Management System (LMS) is designed to manage the administrative and academic functions of an institute. It facilitates seamless communication between students, teachers, and administrative staff, streamlining various processes like course management, enrollment, and performance tracking.
+Overview
 
-## Features
+Welcome to the Saylani Microfinance App Hackathon! This 12-hour event is designed for students who have completed a 13-month MERN stack course. The objective is to develop a microfinance application for Saylani Welfare, focusing on providing interest-free loans under the Qarze Hasana program. The application will cater to multiple loan categories, include a landing page, and feature both user and admin functionalities.
 
-- **User Roles**: Different user roles such as Admin, Teachers, and Students with customized access.
-- **Course Management**: Admins and teachers can add, update, and manage courses and materials.
-- **Student Enrollment**: Students can enroll in courses and track their progress.
-- **Attendance Tracking**: Teachers and admins can maintain attendance records for each course.
-- **Grades & Performance**: Teachers can grade students and monitor their academic performance.
-- **Assignments & Exams**: Students can submit assignments and take exams, while teachers can grade and provide feedback.
-- **Notifications**: Admins and teachers can send notifications to students regarding deadlines, grades, and other important updates.
+Features and Requirements
 
-## Installation
+Loan Categories
 
-To set up the project locally, follow these steps:
+The application will support the following loan categories:
 
-### Prerequisites
+Wedding Loans
 
-Make sure you have the following installed:
+Subcategories: Valima, Furniture, Valima Food, Jahez
 
-- **Node.js**: For running the backend server.
-- **MongoDB**: For database management (or any other database based on your implementation).
-- **npm** or **yarn**: To install project dependencies.
+Maximum loan: PKR 5 Lakh
 
-### Steps to Set Up
+Loan period: 3 years
 
-1. **Clone the Repository**
+Home Construction Loans
 
-   ```bash
-   git clone https://github.com/Shoaib0320/Manegement-System-
-   cd Manegement-System-
-   ```
+Subcategories: Structure, Finishing, Loan
 
-2. **Install Dependencies**
+Maximum loan: PKR 10 Lakh
 
-   Inside the project directory, run the following command:
+Loan period: 5 years
 
-   ```bash
-   npm install
-   ```
+Business Startup Loans
 
-3. **Set Up the Database**
+Subcategories: Buy Stall, Advance Rent for Shop, Shop Assets, Shop Machinery
 
-   Ensure you have a MongoDB database running locally or use a cloud-based database (like MongoDB Atlas). Update the connection string in the `.env` file.
+Maximum loan: PKR 10 Lakh
 
-4. **Start the Application**
+Loan period: 5 years
 
-   Once dependencies are installed and the database is set up, run:
+Education Loans
 
-   ```bash
-   npm start
-   ```
+Subcategories: University Fees, Child Fees Loan
 
-   The server should now be running at `http://localhost:5173`.
+Maximum loan: Based on requirement
 
-## Usage
+Loan period: 4 years
 
-### Admin
-- **Add/Manage Users**: Admins can add new students, teachers, and manage roles.
-- **Create/Manage Courses**: Admins can create courses, assign instructors, and add resources.
-- **Track Performance**: Admins can access performance reports and grade summaries.
+User Journey
 
-### Teachers
-- **Manage Courses**: Teachers can view and edit courses they're assigned to, upload materials, and grade students.
-- **Track Student Progress**: Teachers can monitor attendance, grades, and assignment submissions.
+Landing Page
 
-### Students
-- **Enroll in Courses**: Students can browse and enroll in available courses.
-- **Submit Assignments/Take Exams**: Students can submit assignments and take exams as part of the course requirements.
-- **View Grades & Feedback**: Students can view their grades and feedback from teachers.
+Displays loan categories and subcategories.
 
-## Technologies Used
+Includes a loan calculator where users can:
 
-- **Frontend**: React (or any other frontend framework like Angular or Vue)
-- **Backend**: Node.js with Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
-- **Styling**: Bootstrap / Material UI (or custom CSS)
+Select a category and subcategory.
 
-## Contributing
+Input initial deposit.
 
-Feel free to fork this project and submit pull requests. Contributions are welcome!
+Select loan period.
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature-name`).
-5. Create a new pull request.
+Calculate estimated loan breakdown.
 
-## License
+Application Process
 
-This project is licensed under the MIT License.
+Proceed Action:
+
+Users click the "Proceed" button, which opens a popup form.
+
+Fields: CNIC, Email, Name.
+
+Account Creation:
+
+User receives an email containing a password.
+
+User logs in and is prompted to create a new password.
+
+Loan Request Submission:
+
+Users view their loan request details.
+
+Provide additional details:
+
+Two guarantors' information (Name, Email, Location, CNIC).
+
+Statement and salary sheet (optional).
+
+Personal details (Address, Phone Number, etc.).
+
+Slip Generation:
+
+System generates a slip containing:
+
+Token number
+
+QR code
+
+Appointment details (date, time, office location)
+
+Users can download the slip for their appointment.
+
+Admin Panel Features
+
+Application Management:
+
+View all submitted applications.
+
+Filter applications by City/Country.
+
+Add token numbers to applications.
+
+Loan Details:
+
+View requested loan details (category, subcategory, loan amount).
+
+View guarantor details and user-provided information.
+
+Appointment Scheduling:
+
+Automatically schedule user appointments based on available slots.
+
+Development Structure
+
+Frontend
+
+Technologies: React.js
+
+Pages:
+
+Landing Page
+
+Calculator Page
+
+User Registration/Login
+
+Loan Request Form
+
+Dashboard (User & Admin)
+
+Backend
+
+Technologies: Node.js with Express
+
+Database: MongoDB
+
+Features:
+
+User Authentication
+
+Loan Request Handling
+
+Guarantor Information Storage
+
+Appointment Scheduling
+
+API Endpoints
+
+User Endpoints
+
+POST /register – Register user (CNIC, Email, Name)
+
+POST /loan-request – Submit loan request
+
+POST /add-guarantor – Add guarantor information
+
+GET /loan-details – Fetch loan details
+
+GET /generate-slip – Generate slip with QR code & appointment details
+
+Admin Endpoints
+
+GET /applications – View all applications
+
+PUT /update-application-status – Update application status
+
+POST /add-token – Add token numbers to applications
+
+GET /filter-applications – Filter applications by city/country
+
+Project Workflow
+
+1. Design Phase
+
+Create wireframes for landing page, calculator, and user journey.
+
+Finalize database schema for users, guarantors, loans, and appointments.
+
+2. Development Phase
+
+Implement frontend components for user journey.
+
+Develop backend APIs for user authentication, loan requests, and admin functionalities.
+
+Integrate QR code generation and appointment scheduling.
+
+3. Testing Phase
+
+Test user flows for loan request submission and account creation.
+
+Validate data integrity for guarantors and loan details.
+
+4. Deployment
+
+Deploy the application on Vercel or AWS.
+
+Hackathon Timeline
+
+Hour 1-3:
+
+Set up project structure and basic frontend/backend integration.
+
+Implement landing page and loan calculator.
+
+Hour 4-6:
+
+Create user registration and login functionalities.
+
+Develop loan request form and submission flow.
+
+Hour 7-9:
+
+Implement QR code generation and slip download.
+
+Build admin panel functionalities.
+
+Hour 10-12:
+
+Test the complete application.
+
+Deploy project and prepare presentations.
+
+Expected Deliverables
+
+Fully functional microfinance app.
+
+User-friendly landing page with loan categories and calculator.
+
+Complete user journey for loan request submission.
+
+Admin panel for managing applications and appointments.
+
+Deployed application ready for presentation.
+
+Hackathon Rules and Guidelines
+
+Teams will consist of 4-5 members.
+
+All code must be written during the hackathon.
+
+Use of pre-built templates or libraries must be disclosed.
+
+Evaluation criteria:
+
+Functionality – Does the app work as intended?
+
+User Experience – Is the app intuitive and easy to use?
+
+Code Quality – Is the code well-structured and maintainable?
+
+Presentation – How well is the project demonstrated?
+
+Conclusion
+
+The Saylani Microfinance App aims to simplify the loan application process for users while ensuring efficient management for the organization. This hackathon will test students' MERN stack knowledge and provide a practical solution for Saylani Welfare’s Qarze Hasana program.
+
+Good luck and happy coding!
+

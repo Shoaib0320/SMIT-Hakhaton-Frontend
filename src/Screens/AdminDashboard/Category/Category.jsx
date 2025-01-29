@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Section } from "@/Components/Course-Pages/Section";
-import Layout from "@/Components/Sidebar/Layout";
 import SidebarLayout from "../components/Sidebar/SidebarLayout";
-
 import { SubCategory } from "@/Components/Course-Pages/SubCategory";
 import { Categories } from "@/Components/Course-Pages/Category";
 

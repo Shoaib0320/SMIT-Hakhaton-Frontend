@@ -2,6 +2,7 @@ import { useAuth } from "@/Context/AuthContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Avatar } from "antd";
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -191,13 +192,6 @@ function classNames(...classes) {
 //   );
 // }
 
-
-
-
-
-
-
-
 export default function Navbar() {
     const { user, logout } = useAuth();
   
@@ -250,8 +244,8 @@ export default function Navbar() {
                   {user ? (
                     <div className="flex items-center gap-4">
                       <Menu as="div" className="relative inline-block text-left">
-                        <Menu.Button className="flex items-center bg-[#0d6db7] text-white py-2 px-4 rounded-full">
-                          <span>{user.name}</span>
+                        <Menu.Button className="flex items-center font-bold bg-[#0d6db7] text-white rounded-full">
+                          <Avatar>{user.name.slice(0,2)}</Avatar>
                         </Menu.Button>
                         <Transition
                           enter="transition ease-out duration-100"
@@ -263,6 +257,18 @@ export default function Navbar() {
                         >
                           <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="py-1">
+                            <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    className={classNames(
+                                      active ? "bg-gray-100" : "",
+                                      "w-full text-left px-4 py-2 text-sm text-[#0d6db7] "
+                                    )}
+                                  >
+                                    {user.name}
+                                  </button>
+                                )}
+                              </Menu.Item>
                               <Menu.Item>
                                 {({ active }) => (
                                   <button

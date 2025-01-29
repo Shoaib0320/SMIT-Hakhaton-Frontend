@@ -20,6 +20,7 @@ export const AppRoutes = {
   generateSlip: BASE_URL + "users/generateSlip",
   getLoanRequests: BASE_URL + "users/getLoanRequests",
   getAllLoanRequests: BASE_URL + "admin/getAllLoanRequests",
+  getAllAppointments: BASE_URL + "admin/getAllAppointments",
 
   updateApplicationStatus: BASE_URL + "admin/update-status",
   createAppointment: BASE_URL + "admin/createAppointment",
