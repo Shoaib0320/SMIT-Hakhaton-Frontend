@@ -29,19 +29,16 @@ export const RouterConfig = () => {
 
 					<Route path="/category/:id" element={<SingleCategory />} />
 				</Routes> */}
-				{/* <Router> */}
 					<Routes>
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/calculator" element={<LoanCalculator />} />
-						<Route path="/loan-request" element={<LoanRequestsPage />} />
+						<Route path="/dashboard" element={<LoanRequestsPage />} />
 						<Route path="/admin" element={<Admin />} />
 						<Route path="/admin/requests" element={<LoanRequests />} />
 						<Route path="/category" element={<Category />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/signup" element={<SignUp />} />
 					</Routes>
-				{/* </Router> */}
-
 			</AuthProvider>
 		</BrowserRouter>
 	);

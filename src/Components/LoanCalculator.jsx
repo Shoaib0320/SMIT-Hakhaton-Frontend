@@ -98,7 +98,8 @@ const LoanCalculatorWithRequestForm = () => {
 
       if (response.data.loanRequest) {
         message.success("Loan request submitted successfully")
-        generateSlip(response.data.loanRequest._id)
+        // generateSlip(response.data.loanRequest._id)
+        navigate('/dashboard')
       }
     } catch (error) {
       console.error("Error submitting loan request:", error)
@@ -108,33 +109,33 @@ const LoanCalculatorWithRequestForm = () => {
     }
   }
 
-  const generateSlip = async (loanRequestId) => {
-    try {
-      const response = await axios.post(
-        AppRoutes.generateSlip,
-        { loanRequestId },
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        },
-      )
-      setSlip(response.data.slip)
-    } catch (error) {
-      console.error("Error generating slip:", error)
-      message.error("Failed to generate slip. Please try again.")
-    }
-  }
+  // const generateSlip = async (loanRequestId) => {
+  //   try {
+  //     const response = await axios.post(
+  //       AppRoutes.generateSlip,
+  //       { loanRequestId },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${user.token}`,
+  //         },
+  //       },
+  //     )
+  //     setSlip(response.data.slip)
+  //   } catch (error) {
+  //     console.error("Error generating slip:", error)
+  //     message.error("Failed to generate slip. Please try again.")
+  //   }
+  // }
 
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center p-6">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl">
-          <h2 className="text-4xl font-bold text-indigo-600 mb-6 text-center">Loan Calculator</h2>
+          <h2 className="text-4xl font-bold text-[#0d6db7] mb-6 text-center">Loan Calculator</h2>
           <div className="bg-indigo-100 rounded-lg p-4 mb-6">
             <h3 className="text-2xl font-semibold text-indigo-800 mb-2">Selected Category: {selectedCategory}</h3>
-            <p className="text-lg text-indigo-600">
+            <p className="text-lg text-[#0d6db7]">
               Maximum Loan Amount: <span className="font-bold text-indigo-900">{maxLoan.toLocaleString()} PKR</span>
             </p>
           </div>
@@ -171,30 +172,30 @@ const LoanCalculatorWithRequestForm = () => {
             </Form.Item>
 
             <Form.Item className="md:col-span-2">
-              <Button
+              <button
                 type="primary"
                 htmlType="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 border-none h-12 text-lg font-semibold rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                className="w-full text-white bg-[#0d6db7] border-none h-12 text-lg font-semibold rounded-md transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Calculate
-              </Button>
+              </button>
             </Form.Item>
           </Form>
 
-          {result && (
+          {/* {result && (
             <div className="bg-indigo-50 mt-6 p-6 rounded-lg shadow-md border border-indigo-200">
-              <h4 className="text-2xl font-bold text-indigo-700 mb-4">Loan Calculation Result</h4>
+              <h4 className="text-2xl font-bold text-[#184568] mb-4">Loan Calculation Result</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-white p-4 rounded-lg shadow">
-                  <p className="text-lg text-indigo-600 font-semibold">Total Loan Amount</p>
+                  <p className="text-lg text-[#0d6db7] font-semibold">Total Loan Amount</p>
                   <p className="text-2xl font-bold text-indigo-900">{result.totalLoan.toLocaleString()} PKR</p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
-                  <p className="text-lg text-indigo-600 font-semibold">Monthly Installment</p>
+                  <p className="text-lg text-[#0d6db7] font-semibold">Monthly Installment</p>
                   <p className="text-2xl font-bold text-indigo-900">{result.monthlyInstallment.toLocaleString()} PKR</p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
-                  <p className="text-lg text-indigo-600 font-semibold">Loan Period</p>
+                  <p className="text-lg text-[#0d6db7] font-semibold">Loan Period</p>
                   <p className="text-2xl font-bold text-indigo-900">{result.loanPeriodInMonths} Months</p>
                 </div>
               </div>
@@ -207,7 +208,41 @@ const LoanCalculatorWithRequestForm = () => {
                 Proceed to Loan Request
               </Button>
             </div>
-          )}
+          )} */}
+
+          {
+            result && (
+              <div className="bg-indigo-50 mt-6 p-6 rounded-lg shadow-md border border-indigo-200">
+                <h4 className="text-2xl font-bold text-[#184568] mb-4">Loan Calculation Result</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-lg shadow">
+                    <p className="text-lg text-[#0d6db7] font-semibold">Total Loan Amount</p>
+                    <p className="text-2xl font-bold text-indigo-900">
+                      {Math.round(result.totalLoan).toLocaleString()} PKR
+                    </p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg shadow">
+                    <p className="text-lg text-[#0d6db7] font-semibold">Monthly Installment</p>
+                    <p className="text-2xl font-bold text-indigo-900">
+                      {Math.round(result.monthlyInstallment).toLocaleString()} PKR
+                    </p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg shadow">
+                    <p className="text-lg text-[#0d6db7] font-semibold">Loan Period</p>
+                    <p className="text-2xl font-bold text-indigo-900">{result.loanPeriodInMonths} Months</p>
+                  </div>
+                </div>
+
+                <Button
+                  type="primary"
+                  onClick={handleProceed}
+                  className="w-full mt-6 bg-green-600 hover:bg-green-700 border-none h-12 text-lg font-semibold rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                >
+                  Proceed to Loan Request
+                </Button>
+              </div>
+            )
+          }
 
           <Modal
             title={<h3 className="text-2xl font-bold text-indigo-700">Loan Request Form</h3>}
@@ -367,7 +402,7 @@ const LoanCalculatorWithRequestForm = () => {
             </Spin>
           </Modal>
 
-          <Modal
+          {/* <Modal
             title={<h3 className="text-2xl font-bold text-indigo-700">Appointment Slip</h3>}
             visible={!!slip}
             onOk={() => {
@@ -394,7 +429,7 @@ const LoanCalculatorWithRequestForm = () => {
                 </div>
               </div>
             )}
-          </Modal>
+          </Modal> */}
         </div>
       </div>
     </>
