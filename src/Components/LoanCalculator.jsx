@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
-import { Button, Input, Form, Select, message, Modal, Spin } from "antd"
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Input, Form, Select, message, Modal, Spin } from "antd";
 import {
   PlusOutlined,
   MinusCircleOutlined,
@@ -10,75 +10,123 @@ import {
   HomeOutlined,
   GlobalOutlined,
   BankOutlined,
-} from "@ant-design/icons"
-import axios from "axios"
-import { AppRoutes } from "@/Constant/Constant"
-import { useAuth } from "@/Context/AuthContext"
-import Navbar from "./Navbar/Navbar"
+} from "@ant-design/icons";
+import axios from "axios";
+import { AppRoutes } from "@/Constant/Constant";
+import { useAuth } from "@/Context/AuthContext";
+import Navbar from "./Navbar/Navbar";
 
-const { Option } = Select
+const { Option } = Select;
 
 const LoanCalculatorWithRequestForm = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const { user } = useAuth()
-  const [form] = Form.useForm()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [form] = Form.useForm();
 
+  // Configuration objects for each category
   const categoryMaxLoan = {
-    "Wedding Loans": 500000,
-    "Home Construction Loans": 1000000,
-    "Business Startup Loans": 750000,
-    "Education Loans": 300000,
-  }
+    "Wedding Loans": 500000, // 5 Lakh
+    "Home Construction Loans": 1000000, // 10 Lakh
+    "Business Startup Loans": 1000000, // 10 Lakh
+    "Education Loans": Infinity, // Based on requirement (no fixed maximum)
+  };
 
-  const selectedCategory = location.state?.category.name || "Default"
-  const maxLoan = categoryMaxLoan[selectedCategory] || 0
+  const categoryLoanPeriod = {
+    "Wedding Loans": 3,
+    "Home Construction Loans": 5,
+    "Business Startup Loans": 5,
+    "Education Loans": 4,
+  };
 
+  // Get the selected category from state passed by the Landing Page.
+  const selectedCategory = location.state?.category.name || "Default";
+  const allowedMaxLoan = categoryMaxLoan[selectedCategory] || 0;
+  const allowedLoanPeriod = categoryLoanPeriod[selectedCategory] || 0;
+
+  // State for calculator inputs
   const [input, setInput] = useState({
     deposit: "",
-    loanPeriod: "",
-  })
+    requestedAmount: "",
+    loanPeriod: "", // in years (will be chosen from a select)
+  });
 
-  const [result, setResult] = useState(null)
-  const [showRequestForm, setShowRequestForm] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [slip, setSlip] = useState(null)
-
-  const [subcategories, setSubcategories] = useState([])
+  // State for calculated results including deposit info
+  const [result, setResult] = useState(null);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [slip, setSlip] = useState(null);
+  const [subcategories, setSubcategories] = useState([]);
 
   useEffect(() => {
-    const categoryData = location.state?.category
+    const categoryData = location.state?.category;
     if (categoryData) {
-      setSubcategories(categoryData.subcategories || [])
+      setSubcategories(categoryData.subcategories || []);
     }
-  }, [location.state])
+  }, [location.state]);
 
+  // Calculate loan details including deposit and deposit percentage
   const calculateLoan = () => {
-    const totalLoan = maxLoan - Number(input.deposit)
-    const loanPeriodInMonths = Number(input.loanPeriod) * 12
-    const monthlyInstallment = totalLoan / loanPeriodInMonths
-    setResult({ totalLoan, monthlyInstallment, loanPeriodInMonths })
-  }
+    const deposit = Number(input.deposit);
+    const requestedAmount = Number(input.requestedAmount);
+    const loanPeriodYears = Number(input.loanPeriod);
+
+    // Validate requested amount against allowed maximum (if applicable)
+    if (allowedMaxLoan !== Infinity && requestedAmount > allowedMaxLoan) {
+      message.error(
+        `The requested loan amount exceeds the maximum allowed for ${selectedCategory} (${allowedMaxLoan.toLocaleString()} PKR).`
+      );
+      return;
+    }
+
+    // Validate that the deposit is at least 10% of the requested loan amount
+    if (deposit < 0.1 * requestedAmount) {
+      message.error("The initial deposit must be at least 10% of the requested loan amount.");
+      return;
+    }
+
+    // Calculate values:
+    // Total Loan granted is the requested amount minus the deposit.
+    const totalLoan = requestedAmount - deposit;
+    // Loan period in months
+    const loanPeriodInMonths = loanPeriodYears * 12;
+    // Monthly installment calculation
+    const monthlyInstallment = totalLoan / loanPeriodInMonths;
+    // Calculate deposit percentage relative to the requested amount
+    const depositPercentage = (deposit / requestedAmount) * 100;
+
+    // Set the results (include deposit and depositPercentage)
+    setResult({ 
+      totalLoan, 
+      monthlyInstallment, 
+      loanPeriodInMonths, 
+      deposit, 
+      depositPercentage 
+    });
+  };
 
   const handleProceed = () => {
-    setShowRequestForm(true)
-  }
+    setShowRequestForm(true);
+  };
 
   const handleSubmit = async (values) => {
     if (!user) {
-      message.error("Please log in to submit a loan request.")
-      return
+      message.error("Please log in to submit a loan request.");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
+      // Here, we use the calculated deposit info from `result`
       const loanRequestData = {
         userId: user._id,
         category: selectedCategory,
         subcategory: values.subcategory,
         country: values.country,
         city: values.city,
-        amount: result.totalLoan,
+        amount: result.totalLoan,         // Total loan amount after subtracting deposit
+        deposit: result.deposit,            // The deposit amount entered
+        depositPercentage: result.depositPercentage, // Deposit percentage
         loanPeriod: result.loanPeriodInMonths,
         personalInfo: {
           address: values.address,
@@ -88,27 +136,29 @@ const LoanCalculatorWithRequestForm = () => {
           name: guarantor.name,
           phoneNumber: guarantor.phoneNumber,
         })),
-      }
+      };
 
       const response = await axios.post(AppRoutes.submitLoan, loanRequestData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
-      })
+      });
 
       if (response.data.loanRequest) {
-        message.success("Loan request submitted successfully")
+        message.success("Loan request submitted successfully");
+        // Optionally, generate a slip here if needed:
         // generateSlip(response.data.loanRequest._id)
-        navigate('/dashboard')
+        navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Error submitting loan request:", error)
-      message.error("Failed to submit loan request. Please try again.")
+      console.error("Error submitting loan request:", error);
+      message.error("Failed to submit loan request. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
+  // (Optional) generateSlip function is commented out
   // const generateSlip = async (loanRequestId) => {
   //   try {
   //     const response = await axios.post(
@@ -118,14 +168,14 @@ const LoanCalculatorWithRequestForm = () => {
   //         headers: {
   //           Authorization: `Bearer ${user.token}`,
   //         },
-  //       },
-  //     )
-  //     setSlip(response.data.slip)
+  //       }
+  //     );
+  //     setSlip(response.data.slip);
   //   } catch (error) {
-  //     console.error("Error generating slip:", error)
-  //     message.error("Failed to generate slip. Please try again.")
+  //     console.error("Error generating slip:", error);
+  //     message.error("Failed to generate slip. Please try again.");
   //   }
-  // }
+  // };
 
   return (
     <>
@@ -134,15 +184,47 @@ const LoanCalculatorWithRequestForm = () => {
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl">
           <h2 className="text-4xl font-bold text-[#0d6db7] mb-6 text-center">Loan Calculator</h2>
           <div className="bg-indigo-100 rounded-lg p-4 mb-6">
-            <h3 className="text-2xl font-semibold text-indigo-800 mb-2">Selected Category: {selectedCategory}</h3>
+            <h3 className="text-2xl font-semibold text-indigo-800 mb-2">
+              Selected Category: {selectedCategory}
+            </h3>
             <p className="text-lg text-[#0d6db7]">
-              Maximum Loan Amount: <span className="font-bold text-indigo-900">{maxLoan.toLocaleString()} PKR</span>
+              Maximum Loan Amount:{" "}
+              <span className="font-bold text-indigo-900">
+                {allowedMaxLoan === Infinity
+                  ? "Based on requirement"
+                  : allowedMaxLoan.toLocaleString() + " PKR"}
+              </span>
+            </p>
+            <p className="text-lg text-[#0d6db7]">
+              Allowed Loan Period:{" "}
+              <span className="font-bold text-indigo-900">
+                {allowedLoanPeriod} {allowedLoanPeriod > 1 ? "Years" : "Year"}
+              </span>
             </p>
           </div>
 
-          <Form layout="vertical" className="grid grid-cols-1 md:grid-cols-2 gap-6" onFinish={calculateLoan}>
+          <Form
+            layout="vertical"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            onFinish={calculateLoan}
+          >
             <Form.Item
-              label="Enter Initial Deposit (PKR):"
+              label="Total Amount Required (PKR):"
+              name="requestedAmount"
+              rules={[{ required: true, message: "Please enter the loan amount you require" }]}
+            >
+              <Input
+                type="number"
+                placeholder="Enter desired loan amount"
+                value={input.requestedAmount}
+                onChange={(e) => setInput({ ...input, requestedAmount: e.target.value })}
+                prefix={<BankOutlined className="text-indigo-500" />}
+                className="rounded-md"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Initial Deposit (PKR):"
               name="deposit"
               rules={[{ required: true, message: "Please enter the initial deposit" }]}
             >
@@ -157,18 +239,22 @@ const LoanCalculatorWithRequestForm = () => {
             </Form.Item>
 
             <Form.Item
-              label="Enter Loan Period (Years):"
+              label="Select Loan Period (Years):"
               name="loanPeriod"
-              rules={[{ required: true, message: "Please enter the loan period in years" }]}
+              rules={[{ required: true, message: "Please select the loan period in years" }]}
             >
-              <Input
-                type="number"
-                placeholder="Loan Period in Years"
+              <Select
+                placeholder="Select Loan Period"
                 value={input.loanPeriod}
-                onChange={(e) => setInput({ ...input, loanPeriod: e.target.value })}
-                prefix={<CalculatorOutlined className="text-indigo-500" />}
+                onChange={(value) => setInput({ ...input, loanPeriod: value })}
                 className="rounded-md"
-              />
+              >
+                {Array.from({ length: allowedLoanPeriod }, (_, i) => i + 1).map((year) => (
+                  <Option key={year} value={year}>
+                    {year} {year > 1 ? "Years" : "Year"}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
 
             <Form.Item className="md:col-span-2">
@@ -182,24 +268,33 @@ const LoanCalculatorWithRequestForm = () => {
             </Form.Item>
           </Form>
 
-          {/* {result && (
+          {result && (
             <div className="bg-indigo-50 mt-6 p-6 rounded-lg shadow-md border border-indigo-200">
               <h4 className="text-2xl font-bold text-[#184568] mb-4">Loan Calculation Result</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-white p-4 rounded-lg shadow">
                   <p className="text-lg text-[#0d6db7] font-semibold">Total Loan Amount</p>
-                  <p className="text-2xl font-bold text-indigo-900">{result.totalLoan.toLocaleString()} PKR</p>
+                  <p className="text-2xl font-bold text-indigo-900">
+                    {Math.round(result.totalLoan).toLocaleString()} PKR
+                  </p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
                   <p className="text-lg text-[#0d6db7] font-semibold">Monthly Installment</p>
-                  <p className="text-2xl font-bold text-indigo-900">{result.monthlyInstallment.toLocaleString()} PKR</p>
+                  <p className="text-2xl font-bold text-indigo-900">
+                    {Math.round(result.monthlyInstallment).toLocaleString()} PKR
+                  </p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
                   <p className="text-lg text-[#0d6db7] font-semibold">Loan Period</p>
                   <p className="text-2xl font-bold text-indigo-900">{result.loanPeriodInMonths} Months</p>
                 </div>
               </div>
-
+              <div className="mt-4">
+                <p className="text-lg text-[#0d6db7] font-semibold">
+                  Deposit: {Number(result.deposit).toLocaleString()} PKR (
+                  {result.depositPercentage.toFixed(2)}%)
+                </p>
+              </div>
               <Button
                 type="primary"
                 onClick={handleProceed}
@@ -208,41 +303,7 @@ const LoanCalculatorWithRequestForm = () => {
                 Proceed to Loan Request
               </Button>
             </div>
-          )} */}
-
-          {
-            result && (
-              <div className="bg-indigo-50 mt-6 p-6 rounded-lg shadow-md border border-indigo-200">
-                <h4 className="text-2xl font-bold text-[#184568] mb-4">Loan Calculation Result</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-white p-4 rounded-lg shadow">
-                    <p className="text-lg text-[#0d6db7] font-semibold">Total Loan Amount</p>
-                    <p className="text-2xl font-bold text-indigo-900">
-                      {Math.round(result.totalLoan).toLocaleString()} PKR
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow">
-                    <p className="text-lg text-[#0d6db7] font-semibold">Monthly Installment</p>
-                    <p className="text-2xl font-bold text-indigo-900">
-                      {Math.round(result.monthlyInstallment).toLocaleString()} PKR
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow">
-                    <p className="text-lg text-[#0d6db7] font-semibold">Loan Period</p>
-                    <p className="text-2xl font-bold text-indigo-900">{result.loanPeriodInMonths} Months</p>
-                  </div>
-                </div>
-
-                <Button
-                  type="primary"
-                  onClick={handleProceed}
-                  className="w-full mt-6 bg-green-600 hover:bg-green-700 border-none h-12 text-lg font-semibold rounded-md transition duration-300 ease-in-out transform hover:scale-105"
-                >
-                  Proceed to Loan Request
-                </Button>
-              </div>
-            )
-          }
+          )}
 
           <Modal
             title={<h3 className="text-2xl font-bold text-indigo-700">Loan Request Form</h3>}
@@ -275,7 +336,7 @@ const LoanCalculatorWithRequestForm = () => {
                     {
                       validator: async (_, guarantors) => {
                         if (!guarantors || guarantors.length < 2) {
-                          return Promise.reject(new Error("At least 2 guarantors are required"))
+                          return Promise.reject(new Error("At least 2 guarantors are required"));
                         }
                       },
                     },
@@ -401,40 +462,10 @@ const LoanCalculatorWithRequestForm = () => {
               </Form>
             </Spin>
           </Modal>
-
-          {/* <Modal
-            title={<h3 className="text-2xl font-bold text-indigo-700">Appointment Slip</h3>}
-            visible={!!slip}
-            onOk={() => {
-              setSlip(null)
-              navigate("/")
-            }}
-            onCancel={() => setSlip(null)}
-            className="custom-modal"
-          >
-            {slip && (
-              <div className="bg-indigo-50 p-6 rounded-lg">
-                <p className="text-lg text-indigo-800 mb-2">
-                  <span className="font-semibold">Token Number:</span> {slip.tokenNumber}
-                </p>
-                <p className="text-lg text-indigo-800 mb-2">
-                  <span className="font-semibold">Appointment Date:</span>{" "}
-                  {new Date(slip?.appointment?.date).toLocaleDateString()}
-                </p>
-                <p className="text-lg text-indigo-800 mb-2">
-                  <span className="font-semibold">Appointment Time:</span> {slip.appointment?.time}
-                </p>
-                <div className="flex justify-center mt-4">
-                  <img src={slip.qrCode || "/placeholder.svg"} alt="QR Code" className="w-48 h-48" />
-                </div>
-              </div>
-            )}
-          </Modal> */}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default LoanCalculatorWithRequestForm
-
+export default LoanCalculatorWithRequestForm;

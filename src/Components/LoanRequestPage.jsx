@@ -1,14 +1,16 @@
-
 import React, { useEffect, useState } from "react";
-import { Table, Button, Tag, Spin, message } from "antd";
+import { Table, Button, Tag, Spin, message, Select } from "antd";
 import axios from "axios";
 import { useAuth } from "@/Context/AuthContext";
 import { AppRoutes } from "@/Constant/Constant";
-import Navbar from "./Navbar/Navbar";
+
+const { Option } = Select;
 
 const LoanRequestsPage = () => {
   const [loanRequests, setLoanRequests] = useState([]);
+  const [filteredRequests, setFilteredRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedStatus, setSelectedStatus] = useState("All");
   const { user } = useAuth();
 
   useEffect(() => {
@@ -23,11 +25,22 @@ const LoanRequestsPage = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setLoanRequests(response.data.loanRequests);
+      setFilteredRequests(response.data.loanRequests); // Initialize filtered data
     } catch (error) {
       console.error("Error fetching loan requests:", error);
       message.error("Failed to fetch loan requests. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleFilterChange = (value) => {
+    setSelectedStatus(value);
+    if (value === "All") {
+      setFilteredRequests(loanRequests);
+    } else {
+      const filtered = loanRequests.filter((loan) => loan.status === value);
+      setFilteredRequests(filtered);
     }
   };
 
@@ -66,7 +79,6 @@ const LoanRequestsPage = () => {
       ),
     },
     { title: "Token Number", dataIndex: "tokenNumber", key: "tokenNumber" },
-    // { title: "Address", dataIndex: ["personalInfo", "address"], key: "address" },
     { title: "Phone Number", dataIndex: ["personalInfo", "phoneNumber"], key: "phoneNumber" },
     {
       title: "Guarantors",
@@ -80,30 +92,52 @@ const LoanRequestsPage = () => {
             </div>
           ))}
         </div>
-      )
+      ),
     },
     {
       title: "Action",
       key: "action",
-      render: (_, record) => (
+      render: (_, record) =>
         record.status === "approved" ? (
-          <button className="bg-[#0d6db7] text-white font-semibold px-4 py-2 rounded-lg transition" onClick={() => handleViewSlip(record._id)}>
+          <button
+            className="bg-[#0d6db7] text-white font-semibold px-4 py-2 rounded-lg transition"
+            onClick={() => handleViewSlip(record._id)}
+          >
             View Loan Slip
           </button>
-        ) : null
-      ),
+        ) : null,
     },
   ];
 
   if (!user) {
-    return <div className="text-center mx-auto text-xl font-semibold text-red-500 mt-10">Please log in to view your loan requests.</div>;
+    return (
+      <div className="text-center mx-auto text-xl font-semibold text-red-500 mt-10">
+        Please log in to view your loan requests.
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen">
-      <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center text-[#0d6db7] mb-8">Your Loan Requests</h1>
+        <h1 className="text-4xl font-bold text-center text-[#0d6db7] mb-8">
+          Your Loan Requests
+        </h1>
+
+        {/* Filter Dropdown */}
+        <div className="flex justify-end mb-4">
+          <Select
+            value={selectedStatus}
+            onChange={handleFilterChange}
+            className="w-40"
+          >
+            <Option value="All">All</Option>
+            <Option value="pending">Pending</Option>
+            <Option value="approved">Approved</Option>
+            <Option value="rejected">Rejected</Option>
+          </Select>
+        </div>
+
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <Spin size="large" />
@@ -112,11 +146,10 @@ const LoanRequestsPage = () => {
           <div className="bg-white shadow-lg rounded-xl p-6 overflow-auto">
             <Table
               columns={columns}
-              dataSource={loanRequests}
+              dataSource={filteredRequests}
               rowKey="_id"
               pagination={{ pageSize: 10 }}
               scroll={{ x: "max-content" }}
-            // className="w-full"
             />
           </div>
         )}

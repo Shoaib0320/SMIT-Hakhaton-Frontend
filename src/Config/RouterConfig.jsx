@@ -11,6 +11,7 @@ import LoanRequests from "@/Screens/AdminDashboard/LoanRequest/LoanRequest";
 import { Category } from "@/Screens/AdminDashboard/Category/Category";
 import Admin from "@/Screens/AdminDashboard/admin/Admin";
 import { Appointments } from "@/Screens/AdminDashboard/Appointments/Appointments";
+import { LoanPage } from "@/Components/LoanPage";
 // import Admin from "@/Screens/AdminDashboard/admin/Admin";
 // import { Category } from "@/Screens/AdminDashboard/Category/Category";
 // import SingleCategory from "@/Screens/Welcome-Screen/SingleCategory";
@@ -32,7 +33,7 @@ export const RouterConfig = () => {
 					<Routes>
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/calculator" element={<LoanCalculator />} />
-						<Route path="/dashboard" element={<LoanRequestsPage />} />
+						<Route path="/dashboard" element={<LoanPage />} />
 						<Route path="/admin" element={<Admin />} />
 						<Route path="/admin/requests" element={<LoanRequests />} />
 						<Route path="/admin/appointments" element={<Appointments />} />
