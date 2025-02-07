@@ -10,6 +10,7 @@ const LoanRequestsPage = () => {
   const [loanRequests, setLoanRequests] = useState([]);
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [totalRequest, setTotalRequest] = useState(0)
   const [selectedStatus, setSelectedStatus] = useState("All");
   const { user } = useAuth();
 
@@ -25,6 +26,7 @@ const LoanRequestsPage = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setLoanRequests(response.data.loanRequests);
+      // setTotalRequest(response.data.loanRequests.length)
       setFilteredRequests(response.data.loanRequests); // Initialize filtered data
     } catch (error) {
       console.error("Error fetching loan requests:", error);
@@ -125,7 +127,8 @@ const LoanRequestsPage = () => {
         </h1>
 
         {/* Filter Dropdown */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-[#0d6db7]">Total Request {filteredRequests ? filteredRequests.length : loanRequests.length}</h3>
           <Select
             value={selectedStatus}
             onChange={handleFilterChange}
